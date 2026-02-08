@@ -30,6 +30,13 @@ Adds total playlist duration, remaining time, and speed-adjusted times to YouTub
 - Toggle remaining time, speed-adjusted times, or theme
 - Open a YouTube playlist to see the info in the sidebar
 
+## Privacy Policy
+
+This extension does not collect, store, or share any personal data. 
+All calculations and displays are performed locally in the user's browser. 
+No data is transmitted to any external server.
+
+
 
 ## License
 
