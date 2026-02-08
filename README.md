@@ -10,6 +10,13 @@ Adds total playlist duration, remaining time, and speed-adjusted times to YouTub
 - Configurable settings via popup
 - Injects clean UI into YouTube sidebar
 
+## Screenshots
+![Display]('Screenshots/Display.png')
+
+![Settings]('Screenshots/Settings.png')
+
+![Whole Page]('Screenshots/WholePage.png')
+
 ## Installation
 
 1. Clone or download this repository
@@ -23,9 +30,6 @@ Adds total playlist duration, remaining time, and speed-adjusted times to YouTub
 - Toggle remaining time, speed-adjusted times, or theme
 - Open a YouTube playlist to see the info in the sidebar
 
-## Screenshots
-
-![Screenshot of sidebar](./screenshot.png)
 
 ## License
 
