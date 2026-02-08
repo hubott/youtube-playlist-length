@@ -24,6 +24,8 @@ function isPlaylistPage() {
   return window.location.href.includes("&list=");
 }
 
+
+
 // --------------------- Core Functions --------------------- //
 function getDurations() {
   const els = document.querySelectorAll(
@@ -37,6 +39,32 @@ function getDurations() {
   return durations;
 }
 
+function getCurrentIndex() {
+  const params = new URLSearchParams(window.location.search);
+  const index = params.get("index");
+
+  if (!index) return 0;
+
+  // YouTube index is 1-based → convert to 0-based
+  return Math.max(parseInt(index) - 1, 0);
+}
+
+function getElapsedPlaylistTime() {
+  const durations = window.playlistDurations || [];
+  if (durations.length === 0) return 0;
+
+  const currentIndex = getCurrentIndex();
+
+  // sum of all videos BEFORE current
+  const previousVideosTime = durations
+    .slice(0, currentIndex)
+    .reduce((sum, d) => sum + d, 0);
+
+  const video = document.querySelector("video");
+  const currentProgress = video ? video.currentTime : 0;
+
+  return previousVideosTime + currentProgress;
+}
 
 // Display the sidebar UI based on settings
 function displayUI(totalSeconds, settings) {
@@ -45,9 +73,8 @@ function displayUI(totalSeconds, settings) {
   const panel = document.querySelector("ytd-playlist-panel-renderer");
   if (!panel) return;
 
-  const video = document.querySelector("video");
-  const currentTime = video ? video.currentTime : 0;
-  const remaining = Math.max(totalSeconds - currentTime, 0);
+  const elapsed = getElapsedPlaylistTime();
+  const remaining = Math.max(totalSeconds - elapsed, 0);
 
   const box = document.createElement("div");
   box.id = "yt-playlist-time-box";
@@ -70,11 +97,18 @@ function displayUI(totalSeconds, settings) {
 
   if (settings.remainingTime) {
     innerHTML += `<div style="margin-top:6px; opacity:0.8;">Remaining: ${formatTime(remaining)}</div>`;
+
+    // 🔹 Calculate finish time
+    const finish = new Date(Date.now() + remaining * 1000);
+    const hours = finish.getHours().toString().padStart(2, '0');
+    const minutes = finish.getMinutes().toString().padStart(2, '0');
+    innerHTML += `<div style="opacity:0.7;">Finishes at: ${hours}:${minutes}</div>`;
   }
 
   box.innerHTML = innerHTML;
   panel.prepend(box);
 }
+
 
 // --------------------- Main Calculation --------------------- //
 let totalSeconds = 0;
@@ -85,8 +119,13 @@ async function calculatePlaylist() {
   const durations = getDurations();
   if (durations.length === 0) return;
 
-  totalSeconds = 0;
-  durations.forEach(time => totalSeconds += timeToSeconds(time));
+  const durationsInSeconds = durations.map(timeToSeconds);
+
+  totalSeconds = durationsInSeconds.reduce((a,b)=>a+b,0);
+
+  // store globally so UI can use it
+  window.playlistDurations = durationsInSeconds;
+
 
   // Read settings and display UI immediately
   chrome.storage.local.get(['remainingTime','speedTimes','darkTheme'], (settings) => {
