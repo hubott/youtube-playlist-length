@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Playlist Settings</title>
+  <style>
+    body {
+      font-family: Roboto, Arial, sans-serif;
+      background: #181818;
+      color: white;
+      width: 220px;
+      padding: 12px;
+    }
+    h3 {
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+    label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h3>Playlist Settings</h3>
+  <label>
+    Show remaining time
+    <input type="checkbox" id="remainingTime">
+  </label>
+  <label>
+    Show speed-adjusted times
+    <input type="checkbox" id="speedTimes">
+  </label>
+  <label>
+    Dark theme
+    <input type="checkbox" id="darkTheme">
+  </label>
+
+  <script src="popup.js"></script>
+</body>
+</html>
