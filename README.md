@@ -11,11 +11,11 @@ Adds total playlist duration, remaining time, and speed-adjusted times to YouTub
 - Injects clean UI into YouTube sidebar
 
 ## Screenshots
-![Display]('./Screenshots/Display.png')
+![Display](./Screenshots/Display.png)
 
-![Settings]('./Screenshots/Settings.png')
+![Settings](./Screenshots/Settings.png)
 
-![Whole Page]('./Screenshots/WholePage.png')
+![Whole Page](./Screenshots/WholePage.png)
 
 ## Installation
 
