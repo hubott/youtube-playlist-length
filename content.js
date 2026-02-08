@@ -97,13 +97,17 @@ function displayUI(totalSeconds, settings) {
 
   if (settings.remainingTime) {
     innerHTML += `<div style="margin-top:6px; opacity:0.8;">Remaining: ${formatTime(remaining)}</div>`;
+  }
 
-    // 🔹 Calculate finish time
+  if(settings.finishesAt) {
+
     const finish = new Date(Date.now() + remaining * 1000);
     const hours = finish.getHours().toString().padStart(2, '0');
     const minutes = finish.getMinutes().toString().padStart(2, '0');
     innerHTML += `<div style="opacity:0.7;">Finishes at: ${hours}:${minutes}</div>`;
   }
+
+  
 
   box.innerHTML = innerHTML;
   panel.prepend(box);
@@ -128,7 +132,7 @@ async function calculatePlaylist() {
 
 
   // Read settings and display UI immediately
-  chrome.storage.local.get(['remainingTime','speedTimes','darkTheme'], (settings) => {
+  chrome.storage.local.get(['remainingTime', 'speedTimes', 'darkTheme', 'finishesAt'], (settings) => {
     displayUI(totalSeconds, settings);
   });
 }
@@ -140,7 +144,7 @@ function updateUI() {
     return;
   }
 
-  chrome.storage.local.get(['remainingTime','speedTimes','darkTheme'], (settings) => {
+  chrome.storage.local.get(['remainingTime', 'speedTimes', 'darkTheme', 'finishesAt'], (settings) => {
     displayUI(totalSeconds, settings);
   });
 }

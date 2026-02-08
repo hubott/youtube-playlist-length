@@ -1,5 +1,5 @@
 // List of setting keys
-const SETTINGS = ['remainingTime', 'speedTimes', 'darkTheme'];
+const SETTINGS = ['remainingTime', 'speedTimes', 'darkTheme', 'finishesAt'];
 
 // Initialize checkboxes from storage when popup opens
 document.addEventListener('DOMContentLoaded', () => {
